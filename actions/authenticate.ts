@@ -7,7 +7,7 @@ export async function Authenticate(data: any) {
     await signIn("credentials", {
       username: data.username,
       password: data.password,
-      redirectTo: "/",
+      redirectTo: "/predict",
     });
   } catch (error) {
     if (error instanceof AuthError) {
@@ -21,18 +21,18 @@ export async function Authenticate(data: any) {
     throw error;
   }
 }
-
-export async function SignOut() {
-  await signOut();
-}
 export async function signInGithub() {
   await signIn("github", {
-    redirectTo: "/",
+    redirectTo: "/predict",
   });
 }
 
 export async function signInGoogle() {
   await signIn("google", {
-    redirectTo: "/",
+    redirectTo: "/predict",
   });
+}
+
+export async function SignOut() {
+  await signOut();
 }

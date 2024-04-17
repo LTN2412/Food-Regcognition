@@ -1,18 +1,12 @@
-import { PrismaClient } from "@prisma/client";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { User } from "@prisma/client";
 import { jwtDecode } from "jwt-decode";
 import { GetUserInfo, CheckTokenExp } from "./lib";
 import github from "next-auth/providers/github";
-import { CreateUserOauth } from "./app/lib/CreateUserOauth";
 import google from "next-auth/providers/google";
-import resend from "next-auth/providers/resend";
+import { CreateUserOauth } from "./actions/CreateUser";
 
-const prisma = new PrismaClient();
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  // adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt", maxAge: 3600 },
   providers: [
     github,
@@ -50,14 +44,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return token;
     },
     async session({ session, token, user }) {
-      // if (!user) {
-      //   const data = await GetUserInfo(token.access_token!);
-      //   session.user.email = data.email;
-      //   session.user.name = data.username;
-      // }
-      // if (token) {
-      //   session.access_token = token.access_token;
-      // }
+      if (!user) {
+        const data = await GetUserInfo(token.access_token!);
+        session.user.email = data.email;
+        session.user.name = data.username;
+      }
+      if (token) {
+        session.access_token = token.access_token;
+      }
       return session;
     },
   },

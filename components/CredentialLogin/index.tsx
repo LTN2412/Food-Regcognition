@@ -7,7 +7,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { LoginSchema } from "@/schemas/index";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Authenticate } from "@/actions/authenticate";
+import { Authenticate } from "@/actions/Authenticate";
 import { useState, useTransition } from "react";
 
 export default function CredentialLogin() {

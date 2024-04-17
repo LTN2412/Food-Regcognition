@@ -1,7 +1,5 @@
 import { JWT } from "next-auth/jwt";
 import { jwtDecode } from "jwt-decode";
-import { signOut } from "@/auth";
-import { SignOut } from "@/actions/authenticate";
 
 export async function RefreshAccessToken(token: JWT) {
   const res = await fetch("http://127.0.0.1:8000/user/refresh-token", {
@@ -38,4 +36,3 @@ export async function GetUserInfo(access_token: string) {
   const data = await res.json();
   return data;
 }
-

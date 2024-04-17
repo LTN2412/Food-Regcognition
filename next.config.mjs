@@ -1,8 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  env: {
-    AUTH_SECRET: "123",
-  },
-};
+const nextConfig = {};
 
 export default nextConfig;
