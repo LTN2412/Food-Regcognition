@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+import theme from "./theme.js";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>
+        <CssVarsProvider theme={theme}>
+          <CssBaseline>{children}</CssBaseline>
+        </CssVarsProvider>
+      </body>
     </html>
   );
 }
