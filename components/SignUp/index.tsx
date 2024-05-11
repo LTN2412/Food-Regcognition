@@ -50,7 +50,7 @@ export default function SignUp() {
     startTransition(async () => {
       if (formData.password !== formData.verifyPassword) {
         setError("verifyPassword", {
-          message: "Mật khẩu không khớp",
+          message: "Password didn't match",
         });
       } else {
         await CreateUser(formData).then((err) => {

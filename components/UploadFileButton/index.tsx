@@ -22,7 +22,7 @@ export default function UploadFileButton({ handleChange }: any) {
       startIcon={<CloudUploadIcon />}
       onChange={handleChange}
       sx={{
-        height: "80px",
+        height: "60px",
         backgroundColor: "#475569",
         "&:hover": {
           opacity: 0.8,

@@ -13,9 +13,9 @@ export async function Authenticate(data: any) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "Username or password is not correct" };
+          return { detail: "Username or password is not correct" };
         default:
-          return { error: "Some thing wrong!" };
+          return { detail: "Some thing wrong!" };
       }
     }
     throw error;
@@ -34,5 +34,5 @@ export async function signInGoogle() {
 }
 
 export async function SignOut() {
-  await signOut();
+  await signOut({ redirectTo: "/" });
 }

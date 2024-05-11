@@ -3,7 +3,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import GitHubICon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
+import SvgIcon from "@mui/material/SvgIcon";
+import GoogleIcon from "@/public/google-svg.svg";
 import { signInGithub, signInGoogle } from "@/actions/Authenticate";
 
 export default function OAuthLogin() {
@@ -49,7 +50,7 @@ export default function OAuthLogin() {
         }}
         onClick={() => signInGoogle()}
       >
-        <GoogleIcon sx={{ fontSize: 25 }} />
+        <SvgIcon component={GoogleIcon} inheritViewBox sx={{ fontSize: 25 }} />
         <Typography sx={{ fontSize: 15, textTransform: "capitalize" }}>
           Google
         </Typography>

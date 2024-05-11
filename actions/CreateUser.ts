@@ -10,7 +10,7 @@ export async function CreateUser(data: z.infer<typeof SignUpSchema>) {
     if (key != "verifyPassword") formData.append(key, value);
   }
   try {
-    const res = await fetch("http://127.0.0.1:8000/user/signup", {
+    await fetch("http://127.0.0.1:8000/user/signup", {
       method: "POST",
       body: formData,
     }).then(async (res) => {

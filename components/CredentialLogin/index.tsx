@@ -8,15 +8,16 @@ import { LoginSchema } from "@/schemas/index";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Authenticate } from "@/actions/Authenticate";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 
 export default function CredentialLogin() {
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | undefined>("");
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
+    clearErrors,
   } = useForm<z.infer<typeof LoginSchema>>({
     defaultValues: {
       username: "",
@@ -26,10 +27,11 @@ export default function CredentialLogin() {
   });
 
   const onSubmit: SubmitHandler<z.infer<typeof LoginSchema>> = (data) => {
-    setError("");
     startTransition(async () => {
-      await Authenticate(data).then((data) => {
-        setError(data?.error);
+      await Authenticate(data).then((err) => {
+        setError("root", {
+          message: err?.detail,
+        });
       });
     });
   };
@@ -49,6 +51,7 @@ export default function CredentialLogin() {
           variant="outlined"
           label="Username"
           InputProps={register("username")}
+          onFocus={() => clearErrors("root")}
         />
         {errors.username && (
           <Typography
@@ -63,6 +66,7 @@ export default function CredentialLogin() {
           label="Password"
           type="password"
           InputProps={register("password")}
+          onFocus={() => clearErrors("root")}
         />
         {errors.password && (
           <Typography
@@ -79,7 +83,7 @@ export default function CredentialLogin() {
           variant="body1"
           sx={{ width: "100%", textAlign: "left", color: "red" }}
         >
-          {error}
+          {errors.root?.message}
         </Typography>
       </Box>
     </form>

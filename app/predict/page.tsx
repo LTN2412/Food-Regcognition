@@ -1,5 +1,6 @@
 "use client";
 import UploadFileButton from "@/components/UploadFileButton";
+import AppBar from "@/components/Appbar";
 import ImageCard from "@/components/ImageCard";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -28,63 +29,74 @@ export default function PredictPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = new FormData();
-    form.append("file", img!);
-    const payload = await axios.post("http://127.0.0.1:8000/predict", form, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    setResult(payload.data);
+    if (img) {
+      form.append("file", img);
+      const payload = await axios.post("http://127.0.0.1:8000/predict", form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setResult(payload.data);
+    }
   };
   return (
-    <Box sx={{ display: "flex", width: "100vw", height: "100vh" }}>
+    <Box>
+      <AppBar />
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "50%",
-          backgroundColor: "#fca5a5",
+          width: "100%",
+          height: "calc( 100vh - 64px )",
         }}
       >
-        <form onSubmit={handleSubmit}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 4,
-            }}
-          >
-            <UploadFileButton handleChange={handleChange} />
-            <Button
-              variant="outlined"
-              type="submit"
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "50%",
+            backgroundColor: "#fca5a5",
+          }}
+        >
+          <form onSubmit={handleSubmit}>
+            <Box
               sx={{
-                color: "#475569",
-                borderColor: "#475569",
-                "&:hover": {
-                  opacity: 0.8,
-                  borderColor: "#475569",
-                },
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 4,
               }}
             >
-              Predict
-            </Button>
-          </Box>
-        </form>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "50%",
-          backgroundColor: "#475569",
-        }}
-      >
-        <ImageCard imgURL={imgURL} result={result} />
+              <UploadFileButton handleChange={handleChange} />
+              <Button
+                variant="outlined"
+                type="submit"
+                sx={{
+                  color: "#475569",
+                  borderColor: "#475569",
+                  "&:hover": {
+                    opacity: 0.8,
+                    borderColor: "#475569",
+                  },
+                }}
+              >
+                Predict
+              </Button>
+            </Box>
+          </form>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "50%",
+            backgroundColor: "#db9fb6",
+          }}
+        >
+          <ImageCard imgURL={imgURL} result={result} />
+        </Box>
       </Box>
     </Box>
   );

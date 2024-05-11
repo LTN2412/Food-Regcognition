@@ -7,7 +7,7 @@ export default function Login() {
   return (
     <>
       <Typography variant="h3" sx={{ mb: 5 }}>
-        Sign In
+        Log In
       </Typography>
       <OAuthLogin />
       <CredentialLogin />
