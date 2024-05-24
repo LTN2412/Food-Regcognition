@@ -6,8 +6,12 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import { SignOut } from "@/actions/Authenticate";
 
 export default function PredictPage() {
+  const session = useSession();
+  const access_token = session.data?.access_token;
   const [img, setImg] = useState<File>();
   const [imgURL, setImgURL] = useState<String | ArrayBuffer | null>("");
   const [result, setResult] = useState({
@@ -31,12 +35,21 @@ export default function PredictPage() {
     const form = new FormData();
     if (img) {
       form.append("file", img);
-      const payload = await axios.post("http://127.0.0.1:8000/predict", form, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      setResult(payload.data);
+      try {
+        const payload = await axios.post(
+          "http://127.0.0.1:8000/predict",
+          form,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        setResult(payload.data);
+      } catch {
+        SignOut();
+      }
     }
   };
   return (
