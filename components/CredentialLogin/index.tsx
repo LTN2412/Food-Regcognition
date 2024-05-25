@@ -48,6 +48,7 @@ export default function CredentialLogin() {
         }}
       >
         <TextFields
+          id="username"
           variant="outlined"
           label="Username"
           InputProps={register("username")}
@@ -62,6 +63,7 @@ export default function CredentialLogin() {
           </Typography>
         )}
         <TextFields
+          id="password"
           variant="outlined"
           label="Password"
           type="password"
@@ -76,7 +78,12 @@ export default function CredentialLogin() {
             {errors.password.message}
           </Typography>
         )}
-        <Button variant="outlined" type="submit" disabled={isPending}>
+        <Button
+          id="login"
+          variant="outlined"
+          type="submit"
+          disabled={isPending}
+        >
           Login
         </Button>
         <Typography

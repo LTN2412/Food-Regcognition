@@ -20,7 +20,7 @@ export default function ImageCard({ imgURL, result }: any) {
           alignItems: "center",
         }}
       >
-        <Typography gutterBottom variant="h3">
+        <Typography gutterBottom variant="h3"  >
           {result.predict != "" ? result.predict : "Result"}
         </Typography>
         <Typography variant="body1" color="text.secondary">

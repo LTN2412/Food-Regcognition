@@ -6,6 +6,7 @@ declare module "next-auth" {
   interface Account {}
   interface Session {
     access_token?: string;
+    provider?: string;
   }
 }
 
@@ -20,5 +21,6 @@ declare module "next-auth/jwt" {
     access_token_exp?: number;
     refresh_token?: string;
     refresh_token_exp?: number;
+    provider?: string;
   }
 }

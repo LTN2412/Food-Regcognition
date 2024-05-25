@@ -36,9 +36,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.access_token_exp = jwtDecode(user.access_token!).exp;
         token.refresh_token = user.refresh_token!;
         token.refresh_token_exp = jwtDecode(user.refresh_token!).exp;
+        token.provider = "credentials";
       }
       if (user && account?.provider != "credentials") {
         await CreateUserOauth(user, account!);
+        token.access_token = account?.access_token;
+        token.provider = account?.provider;
       }
       token = await CheckTokenExp(token);
       return token;
@@ -51,6 +54,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       if (token) {
         session.access_token = token.access_token;
+        session.provider = token.provider;
       }
       return session;
     },

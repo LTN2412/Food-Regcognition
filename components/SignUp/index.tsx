@@ -71,6 +71,7 @@ export default function SignUp() {
         }}
       >
         <TextFields
+          id="username_register"
           variant="outlined"
           label="Username"
           name="username"
@@ -80,6 +81,7 @@ export default function SignUp() {
         <FormControl sx={{ width: "25ch" }} variant="outlined">
           <InputLabel>Password</InputLabel>
           <OutlinedInput
+            id="password_register"
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
@@ -100,6 +102,7 @@ export default function SignUp() {
         <FormControl sx={{ width: "25ch" }} variant="outlined">
           <InputLabel>Verify Password</InputLabel>
           <OutlinedInput
+            id="verifypassword"
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
@@ -118,6 +121,7 @@ export default function SignUp() {
         </FormControl>
         <Typography sx={errorText}>{errors.verifyPassword?.message}</Typography>
         <TextFields
+          id="email"
           variant="outlined"
           label="Email"
           name="email"
@@ -126,6 +130,7 @@ export default function SignUp() {
         <Typography sx={errorText}>{errors.email?.message}</Typography>
         <Typography sx={errorText}>{errors.root?.message}</Typography>
         <Button
+          id="register"
           variant="outlined"
           type="submit"
           disabled={isPending}

@@ -17,6 +17,7 @@ const VisuallyHiddenInput = styled("input")({
 export default function UploadFileButton({ handleChange }: any) {
   return (
     <Button
+      id="upload_button"
       component="label"
       variant="contained"
       startIcon={<CloudUploadIcon />}

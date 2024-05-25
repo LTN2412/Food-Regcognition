@@ -11,6 +11,7 @@ import { SignOut } from "@/actions/Authenticate";
 
 export default function PredictPage() {
   const session = useSession();
+  console.log(session);
   const access_token = session.data?.access_token;
   const [img, setImg] = useState<File>();
   const [imgURL, setImgURL] = useState<String | ArrayBuffer | null>("");
@@ -35,21 +36,43 @@ export default function PredictPage() {
     const form = new FormData();
     if (img) {
       form.append("file", img);
-      try {
-        const payload = await axios.post(
-          "http://127.0.0.1:8000/predict",
-          form,
-          {
+      if (session.data?.provider == "credentials") {
+        try {
+          const payload = await axios.get("http://127.0.0.1:8000/check_token", {
             headers: {
               Authorization: `Bearer ${access_token}`,
-              "Content-Type": "multipart/form-data",
             },
-          }
-        );
-        setResult(payload.data);
-      } catch {
-        SignOut();
+          });
+        } catch {
+          SignOut();
+        }
       }
+      if (session.data?.provider == "google") {
+        try {
+          const payload = await axios.get(
+            `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${session.data.access_token}`
+          );
+        } catch {
+          SignOut();
+        }
+      }
+      if (session.data?.provider == "github") {
+        try {
+          const payload = await axios.get("https://api.github.com/user", {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          });
+        } catch {
+          SignOut();
+        }
+      }
+      const payload = await axios.post("http://127.0.0.1:8000/predict", form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setResult(payload.data);
     }
   };
   return (
@@ -83,6 +106,7 @@ export default function PredictPage() {
             >
               <UploadFileButton handleChange={handleChange} />
               <Button
+                id="predict"
                 variant="outlined"
                 type="submit"
                 sx={{

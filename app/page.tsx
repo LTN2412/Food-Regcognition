@@ -1,11 +1,9 @@
-import { auth } from "@/auth";
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 
 export default async function Login() {
-  const session = await auth();
   return (
     <div>
       <Box
@@ -20,14 +18,20 @@ export default async function Login() {
         }}
       >
         <Typography variant="h3">
-          This app create to predict something{" "}
+          This app is created to predict something{" "}
         </Typography>
-        <Button variant="contained">
+        <Button variant="contained" sx={{ mt: "30px" }}>
           <Link
             href={"/signin"}
-            style={{ textDecoration: "none", color: "black" }}
+            style={{
+              textDecoration: "none",
+              color: "black",
+              textTransform: "none",
+              fontSize: "20px",
+              fontWeight: "bold",
+            }}
           >
-            log in
+            Login
           </Link>
         </Button>
       </Box>
